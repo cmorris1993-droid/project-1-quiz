@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WW2 Online Quiz</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>World War II Knowledge Quiz</h1>
+    </header>
+
+    <main class="quiz-container">
+        <section id="how-to-page" class="page-section">
+            <h2>How To Take the Quiz</h2>
+            <p>Welcome to the WW2 Quiz! This page provides clear instructions on how to take the quiz.</p>
+            <ol>
+                <li>Read the instructions below carefully before starting.</li>
+                <li>The quiz consists of 10 questions (Multiple-Choice, True/False, and Fill-in-the-Blank).</li>
+                <li>Use the 'Next' button to advance through the multiple-choice questions[cite: 7].</li>
+                <li>Your answers will be evaluated upon submission[cite: 16].</li>
+            </ol>
+            <button id="start-quiz-btn">Start Quiz</button>
+        </section>
+
+
+        <section id="quiz-area" class="page-section hidden">
+            <h2 id="question-header">Question <span id="current-question-number">1</span> of 10</h2>
+            
+            <div class="question-box">
+                <p id="question-text">Question content will be loaded here...</p>
+            </div>
+
+            <div id="options-container" class="options-group">
+                </div>
+
+            <div class="navigation-buttons">
+                <button id="next-btn" class="nav-btn">Next</button>
+                <button id="submit-btn" class="nav-btn hidden">Submit</button>
+            </div>
+        </section>
+
+
+        <section id="results-area" class="page-section hidden">
+            <h2>Quiz Complete!</h2>
+            <div id="summary-content">
+                <p>You have finished the quiz. Here is your performance summary[cite: 11]:</p>
+                <p>Correct Answers: <span id="correct-answers-count">0</span></p>
+                <p>Total Score: <span id="final-score">0</span></p>
+                </div>
+            <button id="retake-quiz-btn" class="nav-btn">Retake Quiz</button>
+        </section>
+
+    </main>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
