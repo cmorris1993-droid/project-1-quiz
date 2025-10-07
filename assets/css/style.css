@@ -1,42 +1,107 @@
-/* style.css — main stylesheet for the project */
+/* =============================
+   1. GLOBAL STYLES & COLOR SCHEME 
+   ============================= */
+
+/* Define the color variables for easy use and compliance with the 3-color rule */
 :root {
-  --bg: #f8f9fa;
-  --text: #212529;
-  --accent: #0d6efd;
+    /* Muted Army Green/Olive for background */
+    --primary-color: #4b5320; 
+    /* White for text (high contrast) */
+    --secondary-color: #FFFFFF; 
+    /* A third color (e.g., gold/yellow) for accents like buttons or score highlights */
+    --accent-color: #DAA520; 
+    
+    /* Global font size base for accessibility */
+    font-size: 16px;
 }
 
-html, body {
-  height: 100%;
-}
-
+/* Base style for the entire page (body) */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Implement the background color (Army Green) and text color (White) */
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    
+    /* Remove default margin and use a clean, legible font */
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6; /* Good readability */
+    
+    /* Ensure the body takes up the full viewport height */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 1rem;
+/* Reset default margins on headings */
+h1, h2 {
+    color: var(--secondary-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
 }
 
-/* Utility classes */
-.hidden { display: none !important; }
-.center { text-align: center; }
+/* =============================
+   2. LAYOUT AND STRUCTURE STYLES 
+   ============================= */
 
-/* Example button */
-.btn {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+header {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
 }
 
-.btn:active { transform: translateY(1px); }
+/* Container for the main quiz content */
+.quiz-container {
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly darker, semi-transparent overlay for focus */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 90%; /* Responsive width for smaller screens */
+    max-width: 600px; /* Maximum width for readability on large screens */
+    margin-bottom: 20px;
+}
+
+/* Style for hiding pages using JavaScript */
+.hidden {
+    display: none !important; 
+}
+
+/* =============================
+   3. BUTTON & INTERACTIVITY STYLES 
+   ============================= */
+
+/* General button styling for interactivity (required by brief) */
+button {
+    background-color: var(--accent-color); /* Gold accent color */
+    color: var(--primary-color); /* Dark text on the light button for contrast */
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    /* Slightly darker accent on hover for feedback (required by brief) */
+    background-color: #B8860B; 
+}
+
+
+/* =============================
+   4. RESPONSIVENESS (Media Queries) 
+   ============================= */
+
+/* Ensures the layout maintains structural integrity on smaller devices (required by brief) */
+@media (max-width: 480px) {
+    .quiz-container {
+        padding: 20px 15px; /* Reduce padding on small phones */
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 1.5rem; /* Smaller headings on small screens */
+    }
+}
