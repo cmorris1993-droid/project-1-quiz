@@ -1,0 +1,42 @@
+/* style.css — main stylesheet for the project */
+:root {
+  --bg: #f8f9fa;
+  --text: #212529;
+  --accent: #0d6efd;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Utility classes */
+.hidden { display: none !important; }
+.center { text-align: center; }
+
+/* Example button */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn:active { transform: translateY(1px); }
