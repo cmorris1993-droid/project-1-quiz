@@ -94,3 +94,50 @@ const finalScore = document.getElementById("final-score");
 
 let currentQuestionIndex = 0; // Tracks the current question the user is on
 let score = 0; // Tracks the user's score
+
+/* ====================================================================================
+   4. CORE FUNCTIONS
+   Functions to manage the state and display of the quiz.
+   ==================================================================================== */
+
+/**
+ * Initializes the quiz by shuffling questions, hiding the intro, and showing the quiz area.
+ * This is the first function called when the user clicks 'Start Quiz'.
+ */
+function startQuiz() {
+    // Shuffling the questions array to meet the randomness requirement
+    shuffleQuestions(questions);
+
+    // Resetting quiz state
+    currentQuestionIndex = 0;
+    score = 0;
+
+    // Hiding the 'How To' page and showing the 'Quiz Area'
+    howToPage.classList.add('hidden');
+    quizArea.classList.remove('hidden');
+
+    // Load the first question
+    loadQuestion();
+}
+
+/**
+ * Utility function to shuffle an array (Fisher-Yates algorithm for efficient shuffling).
+ * This meets the project requirement that questions should be loaded at random every time.
+ */
+function shuffleQuestions(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        // Pick a random remaining element
+        const j = Math.floor(Math.random() * (i + 1));
+        
+        // Swap it with the current element
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+/* ====================================================================================
+   5. EVENT LISTENERS
+   Attach event handlers to buttons to control the flow of the quiz.
+   ==================================================================================== */
+
+// When the user clicks the 'Start Quiz' button, call the startQuiz function.
+startQuizBtn.addEventListener('click', startQuiz);
