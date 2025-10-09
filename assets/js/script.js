@@ -134,6 +134,76 @@ function shuffleQuestions(array) {
     }
 }
 
+/**
+ * Loads the current question and displays it on the page.
+ * Handles display logic for multiple-choice/true-false vs. fill-in-the-blank.
+ */
+function loadQuestion() {
+    // Check if we are past the last question
+    if (currentQuestionIndex >= questions.length) {
+        // If all questions are done, show the results screen
+        showResults(); 
+        return;
+    }
+
+    // Get the current question object
+    const currentQuestion = questions[currentQuestionIndex];
+
+    // Update the question number display
+    currentQuestionNumber.textContent = currentQuestionIndex + 1;
+
+    // Set the question text
+    questionText.textContent = currentQuestion.question;
+
+    // Clear any previous options/input fields
+    optionsContainer.innerHTML = '';
+
+    // Check the type of question to determine how to display the options
+    if (currentQuestion.type === 'multiple-choice' || currentQuestion.type === 'true-false') {
+        // If it's multiple-choice or true/false, create buttons for options
+        createOptionButtons(currentQuestion);
+    } else if (currentQuestion.type === 'fill-in-the-blank') {
+        // If it's fill-in-the-blank, create an input field
+        createFillInTheBlankInput();
+    }
+    
+    // Manage visibility of the 'Next' and 'Submit' buttons
+    // The 'Submit' button should only be visible on the last question
+    if (currentQuestionIndex === questions.length - 1) {
+        nextBtn.classList.add('hidden');
+        submitBtn.classList.remove('hidden');
+    } else {
+        nextBtn.classList.remove('hidden');
+        submitBtn.classList.add('hidden');
+    }
+}
+
+/**
+ * Creates and appends buttons for multiple-choice and true/false questions.
+ * @param {object} question The current question object.
+ */
+function createOptionButtons(question) {
+    question.options.forEach(option => {
+        const button = document.createElement('button');
+        button.textContent = option;
+        button.classList.add('option-btn'); // Use a class for CSS styling and targeting
+        button.setAttribute('data-answer', option); // Store the answer text on the button
+        optionsContainer.appendChild(button);
+    });
+}
+
+/**
+ * Creates and appends an input field for fill-in-the-blank questions.
+ */
+function createFillInTheBlankInput() {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Type your answer here...';
+    input.id = 'fill-in-input'; // Give it a specific ID for easy targeting when checking the answer
+    input.classList.add('fill-in-input');
+    optionsContainer.appendChild(input);
+}
+
 /* ====================================================================================
    5. EVENT LISTENERS
    Attach event handlers to buttons to control the flow of the quiz.
