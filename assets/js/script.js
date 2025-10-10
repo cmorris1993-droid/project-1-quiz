@@ -219,7 +219,17 @@ function checkAnswer(userAnswer) {
         const normalizedUserAnswer = userAnswer.trim().toLowerCase();
         const normalizedCorrectAnswer = correctAnswer.trim().toLowerCase();
         
+        // Check against the primary answer
         isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
+
+        // **FIX: Check for alternate spelling (Harbour vs. Harbor)**
+        if (!isCorrect && normalizedCorrectAnswer === 'pearl harbor') {
+            if (normalizedUserAnswer === 'pearl harbour') {
+                isCorrect = true;
+            }
+        }
+        // **END FIX**
+
     } else {
         // For multiple-choice and true/false, a direct string comparison is fine
         isCorrect = userAnswer === correctAnswer;
