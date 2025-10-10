@@ -78,6 +78,9 @@ const startQuizBtn = document.getElementById("start-quiz-btn");
 const nextBtn = document.getElementById("next-btn");
 const submitBtn = document.getElementById("submit-btn");
 const retakeQuizBtn = document.getElementById("retake-quiz-btn");
+// *** NEW: Home button references ***
+const homeBtnQuiz = document.getElementById("home-btn-quiz");
+const homeBtnResults = document.getElementById("home-btn-results");
 
 // References for content within the quiz and results areas
 const questionText = document.getElementById("question-text");
@@ -248,6 +251,22 @@ function checkAnswer(userAnswer) {
 }
 
 /**
+ * Resets the state and navigates back to the initial 'How To' page.
+ */
+function goToHome() {
+    // Hide all main content areas
+    quizArea.classList.add('hidden');
+    resultsArea.classList.add('hidden');
+    
+    // Show the landing page
+    howToPage.classList.remove('hidden');
+
+    // Reset score and index 
+    currentQuestionIndex = 0;
+    score = 0;
+}
+
+/**
  * Handles the logic for showing the final results screen.
  */
 function showResults() {
@@ -290,9 +309,7 @@ function handleNext() {
         // or prevent them from continuing.
         alert("Please select an option before using the Next button. (The quiz will advance automatically when an option is selected.)");
         
-        // For the sake of completing the quiz, we will NOT advance the index here. 
-        // We rely on the user clicking an option button to advance.
-        
+        // We rely on the user clicking an option button to advance, so we return here.
         return; 
     }
 }
@@ -311,6 +328,12 @@ submitBtn.addEventListener('click', handleNext); // Submit acts like 'Next' but 
 
 // 3. Allows retaking the quiz from the results screen
 retakeQuizBtn.addEventListener('click', startQuiz); 
+
+// *** NEW: Home button listeners ***
+// 5. Controls navigating back to the home page
+homeBtnQuiz.addEventListener('click', goToHome);
+homeBtnResults.addEventListener('click', goToHome); 
+// **********************************
 
 // 4. Delegation for dynamically created option buttons
 optionsContainer.addEventListener('click', function(event) {

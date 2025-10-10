@@ -19,7 +19,7 @@
             <ol>
                 <li>Read the instructions below carefully before starting.</li>
                 <li>The quiz consists of 10 questions (Multiple-Choice, True/False, and Fill-in-the-Blank).</li>
-                <li>Use the 'Next' button to advance through the multiple-choice questions.</li>
+                <li>Use the 'Next' button to advance through the fill-in-the-blank questions. Multiple-choice questions advance automatically.</li>
                 <li>Your answers will be evaluated upon submission.</li>
             </ol>
             <button id="start-quiz-btn">Start Quiz</button>
@@ -37,6 +37,8 @@
                 </div>
 
             <div class="navigation-buttons">
+                <button id="home-btn-quiz" class="nav-btn secondary-btn">Home</button>
+                
                 <button id="next-btn" class="nav-btn">Next</button>
                 <button id="submit-btn" class="nav-btn hidden">Submit</button>
             </div>
@@ -49,8 +51,13 @@
                 <p>You have finished the quiz. Here is your performance summary:</p>
                 <p>Correct Answers: <span id="correct-answers-count">0</span></p>
                 <p>Total Score: <span id="final-score">0</span></p>
-                </div>
-            <button id="retake-quiz-btn" class="nav-btn">Retake Quiz</button>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button id="home-btn-results" class="nav-btn secondary-btn">Home</button>
+                
+                <button id="retake-quiz-btn" class="nav-btn">Retake Quiz</button>
+            </div>
         </section>
 
     </main>
