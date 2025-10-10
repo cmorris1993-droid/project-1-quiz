@@ -16,7 +16,7 @@ const questions = [
         type: "true-false"
     },
     {
-        question: "The Allied invasion of Normandy on June 6, 1944, is famously known as D-Day.",
+        question: "The Allied invasion of Normandy on June 6, 1944, is famously known as _____.",
         answer: "D-Day",
         type: "fill-in-the-blank"
     },
@@ -33,7 +33,7 @@ const questions = [
         type: "true-false"
     },
     {
-        question: "The decisive naval battle in the Pacific, considered the turning point of the war against Japan, was the Battle of Midway.",
+        question: "The decisive naval battle in the Pacific, considered the turning point of the war against Japan, was the Battle of _____.",
         answer: "Midway",
         type: "fill-in-the-blank"
     },
@@ -50,7 +50,7 @@ const questions = [
         type: "true-false"
     },
     {
-        question: "The surprise Japanese attack on the U.S. naval base at Pearl Harbor brought the United States into the war.",
+        question: "The surprise Japanese attack on the U.S. naval base at _____ brought the United States into the war.",
         answer: "Pearl Harbor",
         type: "fill-in-the-blank"
     },
