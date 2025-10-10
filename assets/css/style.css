@@ -133,6 +133,50 @@ button:hover {
 }
 
 /* =============================
+   3B. REVIEW & EXPLANATION STYLES 
+   ============================= */
+
+/* Style for each question item in the review list */
+.review-item {
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly lighter background for separation */
+    border-left: 5px solid var(--accent-color); /* Gold accent stripe */
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+/* Question heading */
+.review-question {
+    color: var(--secondary-color); /* White */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+/* Style for the user's incorrect answer */
+.user-answer {
+    color: #ff9999; /* Light red/pink to show it's wrong */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Style for the correct answer */
+.correct-answer {
+    color: #a0ffa0; /* Light green to show it's correct */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Style for the explanation text */
+.explanation-text {
+    font-style: italic;
+    color: var(--secondary-color);
+    border-top: 1px dashed rgba(255, 255, 255, 0.3);
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+/* =============================
    4. RESPONSIVENESS (Media Queries) 
    ============================= */
 

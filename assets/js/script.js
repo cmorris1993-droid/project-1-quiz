@@ -7,58 +7,68 @@ const questions = [
         question: "World War II officially began when Germany invaded which country?",
         options: ["A. France", "B. Poland", "C. Austria", "D. Czechoslovakia"],
         answer: "B. Poland",
-        type: "multiple-choice"
+        type: "multiple-choice",
+        explanation: "Germany's invasion of Poland on September 1, 1939, prompted Britain and France to declare war, marking the official start of WWII in Europe."
     },
     {
         question: "True or False: The United States entered World War II immediately after the German invasion of Poland.",
         options: ["True", "False"],
         answer: "False",
-        type: "true-false"
+        type: "true-false",
+        explanation: "False. The U.S. remained officially neutral until the surprise attack on Pearl Harbor more than two years later, in December 1941."
     },
     {
         question: "The Allied invasion of Normandy on June 6, 1944, is famously known as _____.",
         answer: "D-Day",
-        type: "fill-in-the-blank"
+        type: "fill-in-the-blank",
+        explanation: "D-Day (Operation Overlord) was the massive Allied invasion that opened a crucial second front against Germany in Western Europe."
     },
     {
         question: "Who was the Prime Minister of the United Kingdom for most of World War II?",
         options: ["A. Neville Chamberlain", "B. Clement Attlee", "C. Winston Churchill", "D. Anthony Eden"],
         answer: "C. Winston Churchill",
-        type: "multiple-choice"
+        type: "multiple-choice",
+        explanation: "Winston Churchill took office in May 1940 and served as the Prime Minister through the majority of the war, providing essential leadership."
     },
     {
         question: "True or False: Adolf Hitler committed suicide in his bunker after the Battle of Berlin.",
         options: ["True", "False"],
         answer: "True",
-        type: "true-false"
+        type: "true-false",
+        explanation: "True. Facing defeat, Hitler committed suicide in his Berlin bunker (the Führerbunker) on April 30, 1945, just before the city fell to the Soviets."
     },
     {
         question: "The decisive naval battle in the Pacific, considered the turning point of the war against Japan, was the Battle of _____.",
         answer: "Midway",
-        type: "fill-in-the-blank"
+        type: "fill-in-the-blank",
+        explanation: "The Battle of Midway (June 1942) was a decisive victory for the U.S. Navy, sinking four Japanese aircraft carriers and permanently shifting the balance of naval power in the Pacific."
     },
     {
         question: "The two Japanese cities targeted by atomic bombs in August 1945 were Hiroshima and...",
         options: ["A. Tokyo", "B. Nagasaki", "C. Okinawa", "D. Kyoto"],
         answer: "B. Nagasaki",
-        type: "multiple-choice"
+        type: "multiple-choice",
+        explanation: "The first bomb was dropped on Hiroshima (August 6) and the second was dropped on Nagasaki (August 9), leading to Japan's surrender."
     },
     {
         question: "True or False: The Battle of Britain was primarily fought between naval fleets in the English Channel.",
         options: ["True", "False"],
         answer: "False",
-        type: "true-false"
+        type: "true-false",
+        explanation: "False. The Battle of Britain (1940) was primarily an air campaign fought between the RAF (Royal Air Force) and the German Luftwaffe."
     },
     {
         question: "The surprise Japanese attack on the U.S. naval base at _____ brought the United States into the war.",
         answer: "Pearl Harbor",
-        type: "fill-in-the-blank"
+        type: "fill-in-the-blank",
+        explanation: "The attack on Pearl Harbor on December 7, 1941, led the U.S. to formally declare war on Japan and enter WWII."
     },
     {
         question: "What was the name of the German Air Force during the Second World War?",
         options: ["A. Kriegsmarine", "B. Wehrmacht", "C. Luftwaffe", "D. Schutzstaffel (SS)"],
         answer: "C. Luftwaffe",
-        type: "multiple-choice"
+        type: "multiple-choice",
+        explanation: "The Luftwaffe was the aerial warfare branch of the German Wehrmacht (armed forces) throughout WWII."
     }
 ];
 
@@ -72,15 +82,19 @@ const questions = [
 const howToPage = document.getElementById("how-to-page");
 const quizArea = document.getElementById("quiz-area");
 const resultsArea = document.getElementById("results-area");
+// *** NEW: Explanation Page Reference ***
+const explanationsArea = document.getElementById("explanations-area"); 
 
 // References for buttons
 const startQuizBtn = document.getElementById("start-quiz-btn");
 const nextBtn = document.getElementById("next-btn");
 const submitBtn = document.getElementById("submit-btn");
 const retakeQuizBtn = document.getElementById("retake-quiz-btn");
-// *** NEW: Home button references ***
 const homeBtnQuiz = document.getElementById("home-btn-quiz");
 const homeBtnResults = document.getElementById("home-btn-results");
+// *** NEW: Explanation Page Buttons ***
+const reviewAnswersBtn = document.getElementById("review-answers-btn");
+const homeBtnExplanations = document.getElementById("home-btn-explanations"); 
 
 // References for content within the quiz and results areas
 const questionText = document.getElementById("question-text");
@@ -88,6 +102,9 @@ const optionsContainer = document.getElementById("options-container");
 const currentQuestionNumber = document.getElementById("current-question-number");
 const correctAnswersCount = document.getElementById("correct-answers-count");
 const finalScore = document.getElementById("final-score");
+// *** NEW: Explanation Page Content References ***
+const incorrectCount = document.getElementById("incorrect-count");
+const explanationsContent = document.getElementById("explanations-content"); 
 
 
 /* ====================================================================================
@@ -97,6 +114,7 @@ const finalScore = document.getElementById("final-score");
 
 let currentQuestionIndex = 0; // Tracks the current question the user is on
 let score = 0; // Tracks the user's score
+let incorrectAnswers = []; // Stores details of incorrectly answered questions
 
 /* ====================================================================================
    4. CORE FUNCTIONS
@@ -225,14 +243,12 @@ function checkAnswer(userAnswer) {
         // Check against the primary answer
         isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
 
-        // **FIX: Check for alternate spelling (Harbour vs. Harbor)**
+        // FIX: Check for alternate spelling (Harbour vs. Harbor)
         if (!isCorrect && normalizedCorrectAnswer === 'pearl harbor') {
             if (normalizedUserAnswer === 'pearl harbour') {
                 isCorrect = true;
             }
         }
-        // **END FIX**
-
     } else {
         // For multiple-choice and true/false, a direct string comparison is fine
         isCorrect = userAnswer === correctAnswer;
@@ -240,23 +256,93 @@ function checkAnswer(userAnswer) {
 
     if (isCorrect) {
         score++; // Increment the score if the answer is correct
+    } else {
+        // *** Store the question details if the answer was incorrect ***
+        incorrectAnswers.push({
+            question: currentQuestion.question,
+            correctAnswer: currentQuestion.answer,
+            explanation: currentQuestion.explanation,
+            userAnswer: userAnswer || 'N/A' // Store the user's input for review
+        });
     }
 
     // Move to the next question
     currentQuestionIndex++;
     
-    // Clear any temporary styling/highlights here (if they were added for feedback)
-    
     loadQuestion();
 }
 
 /**
+ * Handles the logic for showing the final results screen.
+ * *** UPDATED: Now resets incorrectAnswers and manages Review Answers button visibility. ***
+ */
+function showResults() {
+    // Reset incorrect answers for the new quiz run
+    incorrectAnswers = []; 
+    
+    // Hide the quiz area and show the results area
+    quizArea.classList.add('hidden');
+    resultsArea.classList.remove('hidden');
+
+    // Update the final score displayed in the HTML
+    correctAnswersCount.textContent = score;
+    finalScore.textContent = `${score} / ${questions.length}`; 
+    
+    // Manage visibility of the 'Review Answers' button
+    if (score === questions.length) {
+        reviewAnswersBtn.classList.add('hidden'); // Hide if perfect score
+    } else {
+        reviewAnswersBtn.classList.remove('hidden'); // Show if user got some wrong
+    }
+}
+
+
+/**
+ * Generates and displays the detailed review page for incorrect answers.
+ * *** NEW FUNCTION ***
+ */
+function showExplanations() {
+    // Hide the results area and show the explanations area
+    resultsArea.classList.add('hidden');
+    explanationsArea.classList.remove('hidden');
+
+    // Update the incorrect count in the intro message
+    incorrectCount.textContent = incorrectAnswers.length;
+
+    // Clear previous content
+    explanationsContent.innerHTML = ''; 
+
+    if (incorrectAnswers.length === 0) {
+        explanationsContent.innerHTML = '<p>You got every question correct! No review needed.</p>';
+        return;
+    }
+
+    // Generate HTML for each incorrect question
+    incorrectAnswers.forEach((item, index) => {
+        const reviewItem = document.createElement('div');
+        reviewItem.classList.add('review-item'); // Add a class for styling
+
+        reviewItem.innerHTML = `
+            <h4 class="review-question">Question ${index + 1}: ${item.question}</h4>
+            <p class="user-answer">Your Answer: <span class="user-answer-text">${item.userAnswer}</span></p>
+            <p class="correct-answer">Correct Answer: <span class="correct-answer-text">${item.correctAnswer}</span></p>
+            <p class="explanation-text">${item.explanation}</p>
+        `;
+
+        explanationsContent.appendChild(reviewItem);
+    });
+}
+
+
+/**
  * Resets the state and navigates back to the initial 'How To' page.
+ * *** UPDATED: Now hides the explanations area too. ***
  */
 function goToHome() {
     // Hide all main content areas
     quizArea.classList.add('hidden');
     resultsArea.classList.add('hidden');
+    explanationsArea.classList.add('hidden'); // NEW: Hide explanations page
     
     // Show the landing page
     howToPage.classList.remove('hidden');
@@ -264,19 +350,8 @@ function goToHome() {
     // Reset score and index 
     currentQuestionIndex = 0;
     score = 0;
-}
-
-/**
- * Handles the logic for showing the final results screen.
- */
-function showResults() {
-    // Hide the quiz area and show the results area
-    quizArea.classList.add('hidden');
-    resultsArea.classList.remove('hidden');
-
-    // Update the final score displayed in the HTML
-    correctAnswersCount.textContent = score;
-    finalScore.textContent = `${score} / ${questions.length}`; // Display X out of 10
+    // Note: incorrectAnswers is reset in showResults, but we can do it here too for safety
+    incorrectAnswers = []; 
 }
 
 /**
@@ -284,7 +359,6 @@ function showResults() {
  * This function is now ONLY used for fill-in-the-blank questions.
  * The optionsContainer listener handles multiple-choice/true-false advancement.
  */
-
 function handleNext() {
     const currentQuestion = questions[currentQuestionIndex];
     
@@ -306,10 +380,7 @@ function handleNext() {
     } else {
         // ERROR TRAP: If 'Next' is clicked on a multiple-choice/true-false question, 
         // it means the user advanced without selecting an option, so we should warn them
-        // or prevent them from continuing.
         alert("Please select an option before using the Next button. (The quiz will advance automatically when an option is selected.)");
-        
-        // We rely on the user clicking an option button to advance, so we return here.
         return; 
     }
 }
@@ -329,7 +400,15 @@ submitBtn.addEventListener('click', handleNext); // Submit acts like 'Next' but 
 // 3. Allows retaking the quiz from the results screen
 retakeQuizBtn.addEventListener('click', startQuiz); 
 
-// *** NEW: Home button listeners ***
+// *** NEW: Explanation Page Listeners ***
+// 6. Controls flow to the explanation page
+reviewAnswersBtn.addEventListener('click', showExplanations);
+
+// 7. Home button from the explanations page
+homeBtnExplanations.addEventListener('click', goToHome);
+// **********************************
+
+// *** NEW: Home button listeners (moved to here to keep them grouped) ***
 // 5. Controls navigating back to the home page
 homeBtnQuiz.addEventListener('click', goToHome);
 homeBtnResults.addEventListener('click', goToHome); 
