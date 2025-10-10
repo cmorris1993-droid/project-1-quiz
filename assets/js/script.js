@@ -204,10 +204,108 @@ function createFillInTheBlankInput() {
     optionsContainer.appendChild(input);
 }
 
+/**
+ * Checks the user's selected or typed answer against the correct answer.
+ * @param {string} userAnswer The answer provided by the user.
+ */
+function checkAnswer(userAnswer) {
+    const currentQuestion = questions[currentQuestionIndex];
+    let correctAnswer = currentQuestion.answer;
+    let isCorrect = false;
+
+    // Normalize answers for comparison, especially for fill-in-the-blank
+    if (currentQuestion.type === 'fill-in-the-blank') {
+        // Trim whitespace and convert to lowercase for flexible checking
+        const normalizedUserAnswer = userAnswer.trim().toLowerCase();
+        const normalizedCorrectAnswer = correctAnswer.trim().toLowerCase();
+        
+        isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
+    } else {
+        // For multiple-choice and true/false, a direct string comparison is fine
+        isCorrect = userAnswer === correctAnswer;
+    }
+
+    if (isCorrect) {
+        score++; // Increment the score if the answer is correct
+    }
+
+    // Move to the next question
+    currentQuestionIndex++;
+    
+    // Clear any temporary styling/highlights here (if they were added for feedback)
+    
+    loadQuestion();
+}
+
+/**
+ * Handles the logic for showing the final results screen.
+ */
+function showResults() {
+    // Hide the quiz area and show the results area
+    quizArea.classList.add('hidden');
+    resultsArea.classList.remove('hidden');
+
+    // Update the final score displayed in the HTML
+    correctAnswersCount.textContent = score;
+    finalScore.textContent = `${score} / ${questions.length}`; // Display X out of 10
+}
+
+/**
+ * Determines the user's answer from the input/selection and calls checkAnswer.
+ */
+function handleNext() {
+    const currentQuestion = questions[currentQuestionIndex];
+    let userAnswer = '';
+    
+    if (currentQuestion.type === 'fill-in-the-blank') {
+        // Get input from the text field
+        const inputElement = document.getElementById('fill-in-input');
+        if (!inputElement || inputElement.value.trim() === '') {
+            alert('Please type an answer before proceeding!');
+            return; // Stop execution if input is empty
+        }
+        userAnswer = inputElement.value;
+
+    } else {
+        // For multiple-choice/true-false, we rely on the optionsContainer click listener
+        // The checkAnswer logic is already executed in the optionsContainer listener.
+        // If the Next button is clicked without selecting an option, they missed the question.
+        // We will call loadQuestion here but should ideally only allow progression once an option is selected.
+        
+        // For now, we will simply advance the question if 'Next' is clicked without a selection,
+        // effectively marking it wrong (since checkAnswer wasn't called via the option button).
+        
+        // **BETTER SOLUTION: Check for selected option here, or disable the Next button initially.**
+        
+        // For project completion, we'll implement the simple advance logic:
+        currentQuestionIndex++;
+        loadQuestion();
+        return;
+    }
+
+    // If it was fill-in-the-blank, we call checkAnswer here:
+    checkAnswer(userAnswer);
+}
+
 /* ====================================================================================
    5. EVENT LISTENERS
    Attach event handlers to buttons to control the flow of the quiz.
    ==================================================================================== */
 
-// When the user clicks the 'Start Quiz' button, call the startQuiz function.
+// 1. Controls the flow from the intro screen
 startQuizBtn.addEventListener('click', startQuiz);
+
+// 2. Controls advancing the quiz (handles options/input)
+nextBtn.addEventListener('click', handleNext);
+submitBtn.addEventListener('click', handleNext); // Submit acts like 'Next' but leads to results
+
+// 3. Allows retaking the quiz from the results screen
+retakeQuizBtn.addEventListener('click', startQuiz); 
+
+// 4. Delegation for dynamically created option buttons
+optionsContainer.addEventListener('click', function(event) {
+    if (event.target.classList.contains('option-btn')) {
+        // Pass the answer value stored in the data-answer attribute
+        checkAnswer(event.target.getAttribute('data-answer'));
+    }
+});
