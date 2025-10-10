@@ -252,39 +252,39 @@ function showResults() {
 
 /**
  * Determines the user's answer from the input/selection and calls checkAnswer.
+ * This function is now ONLY used for fill-in-the-blank questions.
+ * The optionsContainer listener handles multiple-choice/true-false advancement.
  */
+
 function handleNext() {
     const currentQuestion = questions[currentQuestionIndex];
-    let userAnswer = '';
     
+    // We only need to process logic here for fill-in-the-blank
     if (currentQuestion.type === 'fill-in-the-blank') {
         // Get input from the text field
         const inputElement = document.getElementById('fill-in-input');
+        
+        // Ensure the user has typed something (basic validation)
         if (!inputElement || inputElement.value.trim() === '') {
             alert('Please type an answer before proceeding!');
             return; // Stop execution if input is empty
         }
-        userAnswer = inputElement.value;
+        
+        // Get the answer and check it
+        let userAnswer = inputElement.value;
+        checkAnswer(userAnswer);
 
     } else {
-        // For multiple-choice/true-false, we rely on the optionsContainer click listener
-        // The checkAnswer logic is already executed in the optionsContainer listener.
-        // If the Next button is clicked without selecting an option, they missed the question.
-        // We will call loadQuestion here but should ideally only allow progression once an option is selected.
+        // ERROR TRAP: If 'Next' is clicked on a multiple-choice/true-false question, 
+        // it means the user advanced without selecting an option, so we should warn them
+        // or prevent them from continuing.
+        alert("Please select an option before using the Next button. (The quiz will advance automatically when an option is selected.)");
         
-        // For now, we will simply advance the question if 'Next' is clicked without a selection,
-        // effectively marking it wrong (since checkAnswer wasn't called via the option button).
+        // For the sake of completing the quiz, we will NOT advance the index here. 
+        // We rely on the user clicking an option button to advance.
         
-        // **BETTER SOLUTION: Check for selected option here, or disable the Next button initially.**
-        
-        // For project completion, we'll implement the simple advance logic:
-        currentQuestionIndex++;
-        loadQuestion();
-        return;
+        return; 
     }
-
-    // If it was fill-in-the-blank, we call checkAnswer here:
-    checkAnswer(userAnswer);
 }
 
 /* ====================================================================================
