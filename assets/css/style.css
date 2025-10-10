@@ -89,6 +89,48 @@ button:hover {
     background-color: #B8860B; 
 }
 
+/* Additional styling for the secondary Home button to visually distinguish it */
+.secondary-btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.secondary-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* -------------------------------------------
+   NEW NAVIGATION LAYOUT STYLES (for Home/Next positioning)
+   ------------------------------------------- */
+
+/* The main container to stack the two button rows */
+.navigation-buttons {
+    display: flex;
+    flex-direction: column; /* Stacks the button rows vertically */
+    gap: 20px; /* Space between the main buttons and the home button */
+    padding-top: 20px;
+}
+
+/* Container for NEXT/SUBMIT/RETAKE QUIZ - aligns buttons to the right (red box area) */
+.main-nav-flow {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%;
+    gap: 10px; /* Space between Next and Submit */
+}
+
+/* Container for HOME button - centers the button (blue box area) */
+.home-nav-flow {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Ensure all navigation buttons have a consistent size/style */
+.nav-btn {
+    min-width: 100px; 
+    margin: 0; /* Remove default button margin, since spacing is controlled by 'gap' now */
+}
 
 /* =============================
    4. RESPONSIVENESS (Media Queries) 
