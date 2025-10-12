@@ -1,3 +1,5 @@
+// jshint esversion: 6
+
 /* ====================================================================================
    1. QUIZ DATA: Store all questions, options, and answers in an array of objects.
    Each object represents a single question.
