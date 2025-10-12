@@ -38,3 +38,21 @@ This section is reserved for listing any external code, libraries, or **tutorial
 1.  **Clone the repository** to your local machine.
 2.  **Open** `index.html` in your web browser to run the quiz locally.
 3.  For **deployment via GitHub Pages**, navigate to the repository's 'Settings' tab, scroll to 'GitHub Pages', **select the Master branch** as the source, and click **Save**.
+
+## Project Features Showcase
+
+### 1. How To Screen
+
+This page provides the user with clear instructions on the quiz format, navigation, and scoring before they begin.
+
+### 2. The Interactive Quiz Screen
+
+The quiz features dynamic rendering of questions, randomisation, and support for multiple question types, including fill-in-the-blank (as shown) and multiple-choice.
+
+### 3. Results Screen
+
+Upon completion, the user receives immediate feedback, including their final score and the total number of correct answers.
+
+### 4. Incorrect Answers Screen
+
+A key feature of the quiz is the ability to review all incorrectly answered questions, along with the correct solution and a full explanation for educational value.
